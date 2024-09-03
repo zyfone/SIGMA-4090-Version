@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
-
 import glob
 import os
 
@@ -25,7 +22,8 @@ requirements = [
 
 
 def get_extensions():
-    extensions_dir = os.path.join("fcos_core", "csrc")
+    this_dir = os.path.dirname(os.path.abspath(__file__))
+    extensions_dir = os.path.join(this_dir, "fcos_core", "csrc")
 
     main_file = glob.glob(os.path.join(extensions_dir, "*.cpp"))
     source_cpu = glob.glob(os.path.join(extensions_dir, "cpu", "*.cpp"))
@@ -37,6 +35,8 @@ def get_extensions():
     extra_compile_args = {"cxx": []}
     define_macros = []
 
+    include_dirs = [extensions_dir]
+
     if (torch.cuda.is_available() and CUDA_HOME is not None) or os.getenv("FORCE_CUDA", "0") == "1":
         extension = CUDAExtension
         sources += source_cuda
@@ -47,8 +47,6 @@ def get_extensions():
             "-D__CUDA_NO_HALF_CONVERSIONS__",
             "-D__CUDA_NO_HALF2_OPERATORS__",
         ]
-
-    include_dirs = [extensions_dir]
 
     ext_modules = [
         extension(
@@ -71,8 +69,8 @@ setup(
     description="FCOS object detector in pytorch",
     scripts=["fcos/bin/fcos"],
     packages=find_packages(exclude=("configs", "tests",)),
-    install_requires=requirements,
+    # install_requires=requirements,
     ext_modules=get_extensions(),
     cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
-    include_package_data=True,
+    # include_package_data=True,
 )
