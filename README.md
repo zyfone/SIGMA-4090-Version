@@ -1,5 +1,5 @@
 SIGMA with CUDA 4090 Support
-This repository is based on the original (https://github.com/CityU-AIM-Group/SIGMA)[SIGMA] project developed by the CityU-AIM Group.
+This repository is based on the original (https://github.com/CityU-AIM-Group/SIGMA) project developed by the CityU-AIM Group.
 
 Overview
 We have made specific modifications to this repository to support the latest CUDA versions compatible with the NVIDIA RTX 4090 GPU. The adjustments were made to ensure compatibility and optimized performance on modern hardware.
